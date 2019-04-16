@@ -7,6 +7,7 @@ import sys
 from settings import *
 from sprites import *
 from os import path
+from tilemap import *
 
 class Game:
     def __init__(self):
@@ -19,10 +20,10 @@ class Game:
 
     def load_data(self):
         game_folder = path.dirname(__file__)
-        self.map_data = []
-        with open(path.join(game_folder,"map.txt"),"rt") as f:
-            for line in f:
-                self.map_data.append(line)
+        img_folder = path.join(game_folder,"images")
+        self.map = Map(path.join(game_folder, 'map.txt'))
+        self.player_img = pg.image.load(path.join(img_folder,PLAYER_IMG)).convert_alpha()
+
 
 
     def new(self):
@@ -30,12 +31,14 @@ class Game:
         self.all_sprites = pg.sprite.Group()
         self.walls = pg.sprite.Group()
 
-        for row, tiles in enumerate(self.map_data):
+        for row, tiles in enumerate(self.map.data):
             for col, tile in enumerate(tiles):
                 if tile == "1":
                     Wall(self,col,row)
                 if tile == "p":
                     self.player = Player(self,col,row)
+
+        self.camera = Camera(self.map.width,self.map.height)
 
     def run(self):
         # game loop - set self.playing = False to end the game
@@ -53,6 +56,7 @@ class Game:
     def update(self):
         # update portion of the game loop
         self.all_sprites.update()
+        self.camera.update(self.player)
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):
@@ -63,7 +67,8 @@ class Game:
     def draw(self):
         self.screen.fill(BGCOLOR)
         self.draw_grid()
-        self.all_sprites.draw(self.screen)
+        for sprite in self.all_sprites:
+            self.screen.blit(sprite.image,self.camera.apply(sprite))
         pg.display.flip()
 
     def events(self):
