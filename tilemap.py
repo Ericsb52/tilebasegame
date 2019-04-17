@@ -1,6 +1,8 @@
 import pygame as pg
 from settings import *
 
+
+
 class Map:
     def __init__(self,filename):
         self.data = []
@@ -21,8 +23,8 @@ class Camera:
     def apply(self,entity):
         return entity.rect.move(self.camera.topleft)
     def update(self, target):
-        x = -target.pos.x + int(WIDTH/2)
-        y = -target.pos.y +int(HEIGHT/2)
+        x = -target.rect.centerx + int(WIDTH / 2)
+        y = -target.rect.centery + int(HEIGHT / 2)
 
         #limit scrolling to map size
         x=min(0,x)

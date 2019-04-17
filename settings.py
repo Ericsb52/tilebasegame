@@ -1,3 +1,4 @@
+import pygame as pg
 # define some colors (R, G, B)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -20,4 +21,9 @@ GRIDHEIGHT = HEIGHT / TILESIZE
 
 #player settings
 PLAYER_SPEED = 350
+PLAYER_ROT_SPEED = 250
+PLAYER_HIT_RECT = pg.Rect(0,0,35,35)
 PLAYER_IMG ="manBlue_gun.png"
+
+def collide_hit_rect(one,two):
+    return one.hit_rect.colliderect(two.rect)
