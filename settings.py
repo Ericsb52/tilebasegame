@@ -28,8 +28,10 @@ PLAYER_ROT_SPEED = 250
 PLAYER_HIT_RECT = pg.Rect(0,0,35,35)
 PLAYER_IMG ="manBlue_gun.png"
 
-
+#mob settings
 MOB_IMG ='zoimbie1_hold.png'
+MOB_SPEED = 150
+MOB_HIT_RECT = pg.Rect(0,0,35,35)
 
 def collide_hit_rect(one,two):
     return one.hit_rect.colliderect(two.rect)
