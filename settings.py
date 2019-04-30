@@ -1,4 +1,6 @@
 import pygame as pg
+
+vec = pg.math.Vector2
 # define some colors (R, G, B)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
@@ -22,13 +24,22 @@ GRIDHEIGHT = HEIGHT / TILESIZE
 
 WALL_IMG = 'box.png'
 
-#player settings
+# player settings
 PLAYER_SPEED = 350
 PLAYER_ROT_SPEED = 250
 PLAYER_HIT_RECT = pg.Rect(0,0,35,35)
 PLAYER_IMG ="manBlue_gun.png"
+BARREL_OFFSET = vec(20,20)
 
-#mob settings
+# Gun settings
+BULLET_IMG = "bullet.png"
+BULLET_SPEED = 500
+BULLET_LIFETIME = 1000
+BULLET_RATE = 150
+KICKBACK = 200
+GUN_SPREAD = 5
+
+# mob settings
 MOB_IMG ='zoimbie1_hold.png'
 MOB_SPEED = 150
 MOB_HIT_RECT = pg.Rect(0,0,35,35)
