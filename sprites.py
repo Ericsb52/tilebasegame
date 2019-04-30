@@ -4,22 +4,23 @@ from random import uniform
 vec = pg.math.Vector2
 
 
+
 def collide_with_walls(sprite,group, dir):
     if dir == 'x':
         hits = pg.sprite.spritecollide(sprite, group, False, collide_hit_rect)
         if hits:
-            if sprite.vel.x > 0:
+            if hits[0].rect.centerx > sprite.hit_rect.centerx:
                 sprite.pos.x = hits[0].rect.left - sprite.hit_rect.width / 2.0
-            if sprite.vel.x < 0:
+            if hits[0].rect.centerx < sprite.hit_rect.centerx:
                 sprite.pos.x = hits[0].rect.right + sprite.hit_rect.width / 2.0
             sprite.vel.x = 0
             sprite.hit_rect.centerx = sprite.pos.x
     if dir == 'y':
         hits = pg.sprite.spritecollide(sprite, group, False, collide_hit_rect)
         if hits:
-            if sprite.vel.y > 0:
+            if hits[0].rect.centery > sprite.hit_rect.centery:
                 sprite.pos.y = hits[0].rect.top - sprite.hit_rect.height / 2.0
-            if sprite.vel.y < 0:
+            if hits[0].rect.centery < sprite.hit_rect.centery:
                 sprite.pos.y = hits[0].rect.bottom + sprite.hit_rect.height / 2.0
             sprite.vel.y = 0
             sprite.hit_rect.centery = sprite.pos.y
@@ -38,6 +39,7 @@ class Player(pg.sprite.Sprite):
         self.pos = vec(x, y) * TILESIZE
         self.rot = 0
         self.last_shot = 0
+        self.player_health = PLAYER_HEALTH
 
 
     def get_keys(self):
@@ -127,6 +129,7 @@ class Mob(pg.sprite.Sprite):
         self.pos = vec(x, y) * TILESIZE
         self.rot = 0
         self.rect.center = self.pos
+        self.health = MOB_HEALTH
 
     def update(self):
         self.rot = (self.game.player.pos - self.pos).angle_to(vec(1,0))
@@ -142,3 +145,17 @@ class Mob(pg.sprite.Sprite):
         self.hit_rect.centery = self.pos.y
         collide_with_walls(self, self.game.walls, 'y')
         self.rect.center = self.hit_rect.center
+        if self.health<=0:
+            self.kill()
+
+    def draw_health(self):
+        if self.health >60:
+            col = GREEN
+        elif self.health >30:
+            col = YELLOW
+        else:
+            col = RED
+        width = int(self.rect.width*self.health/MOB_HEALTH)
+        self.health_bar = pg.Rect(0,0,width,7)
+        if self.health < MOB_HEALTH:
+            pg.draw.rect(self.image,col,self.health_bar)

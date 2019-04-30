@@ -9,6 +9,27 @@ from sprites import *
 from os import path
 from tilemap import *
 
+
+#hud functions
+def draw_player_health(surf,x,y,pct):
+    if pct<0:
+        pct = 0
+    BAR_LENGTH = 300
+    BAR_HEIGHT = 40
+    fill =pct*BAR_LENGTH
+    outline_rect = pg.Rect(x,y,BAR_LENGTH,BAR_HEIGHT)
+    fill_rect = pg.Rect(x,y,fill,BAR_HEIGHT)
+    if pct>0.6:
+        col = GREEN
+    elif pct>0.3:
+        col = YELLOW
+    else:
+        col = RED
+    pg.draw.rect(surf,col,fill_rect)
+    pg.draw.rect(surf,WHITE,outline_rect,2)
+
+
+
 class Game:
     def __init__(self):
         pg.init()
@@ -64,9 +85,21 @@ class Game:
         # update portion of the game loop
         self.all_sprites.update()
         self.camera.update(self.player)
+        # mobs hit player
+        hits = pg.sprite.spritecollide(self.player,self.mobs,False, collide_hit_rect)
+        for hit in hits:
+            self.player.player_health -= MOB_DAMAGE
+            hit.vel = vec(0,0)
+            if self.player.player_health <= 0:
+                self.playing = False
+        if hits:
+            self.player.pos += vec(MOB_KNOCKBACK,0).rotate(-hits[0].rot)
+
+        # bullets hit mobs
         hits = pg.sprite.groupcollide(self.mobs,self.bullets,False,True)
         for hit in hits:
-            hit.kill()
+            hit.health-=BULLET_DAMAGE
+            hit.vel =vec(0,0)
 
     def draw_grid(self):
         for x in range(0, WIDTH, TILESIZE):
@@ -79,7 +112,13 @@ class Game:
         self.screen.fill(BGCOLOR)
         #self.draw_grid()
         for sprite in self.all_sprites:
+            if isinstance(sprite,Mob):
+                sprite.draw_health()
+
             self.screen.blit(sprite.image,self.camera.apply(sprite))
+
+        draw_player_health(self.screen,10,10,self.player.player_health/PLAYER_HEALTH)
+
         pg.display.flip()
 
     def events(self):
