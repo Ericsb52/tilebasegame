@@ -36,7 +36,7 @@ class Player(pg.sprite.Sprite):
         self.hit_rect = PLAYER_HIT_RECT
         self.hit_rect.center = self.rect.center
         self.vel = vec(0, 0)
-        self.pos = vec(x, y) * TILESIZE
+        self.pos = vec(x, y)
         self.rot = 0
         self.last_shot = 0
         self.player_health = PLAYER_HEALTH
@@ -86,6 +86,7 @@ class Bullet(pg.sprite.Sprite):
         self.game = game
         self.image = game.bullet_img
         self.rect = self.image.get_rect()
+        self.hit_rect = self.rect
         self.pos = vec(pos)
         self.rect.center =pos
         self.spread = uniform(-GUN_SPREAD,GUN_SPREAD)
@@ -114,6 +115,16 @@ class Wall(pg.sprite.Sprite):
         self.rect.x = x * TILESIZE
         self.rect.y = y * TILESIZE
 
+class Obstacal(pg.sprite.Sprite):
+    def __init__(self, game, x, y,w,h):
+        self.groups =  game.walls
+        pg.sprite.Sprite.__init__(self, self.groups)
+        self.game = game
+        self.rect = pg.Rect(x,y,w,h)
+        self.x = x
+        self.y = y
+        self.rect.x = x
+        self.rect.y = y
 
 class Mob(pg.sprite.Sprite):
     def __init__(self, game, x, y):
@@ -126,7 +137,7 @@ class Mob(pg.sprite.Sprite):
         self.hit_rect.center = self.rect.center
         self.vel = vec(0, 0)
         self.acc = vec(0,0)
-        self.pos = vec(x, y) * TILESIZE
+        self.pos = vec(x, y)
         self.rot = 0
         self.rect.center = self.pos
         self.health = MOB_HEALTH
