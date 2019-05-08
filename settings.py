@@ -13,8 +13,8 @@ BROWN = (106,55,5)
 CYAN = (0, 255, 255)
 
 # game settings
-WIDTH = 1024   # 16 * 64 or 32 * 32 or 64 * 16
-HEIGHT = 768  # 16 * 48 or 32 * 24 or 64 * 12
+WIDTH = 1200   # 16 * 64 or 32 * 32 or 64 * 16
+HEIGHT = 850  # 16 * 48 or 32 * 24 or 64 * 12
 FPS = 60
 TITLE = "Tilemap Demo"
 BGCOLOR = BROWN
@@ -44,11 +44,12 @@ BULLET_DAMAGE = 10
 
 # mob settings
 MOB_IMG ='zoimbie1_hold.png'
-MOB_SPEED = 150
+MOB_SPEED = [150,100,75,125,50]
 MOB_HIT_RECT = pg.Rect(0,0,35,35)
 MOB_HEALTH = 100
 MOB_DAMAGE = 10
 MOB_KNOCKBACK = 20
+AVOID_RADIUS = 50
 
 def collide_hit_rect(one,two):
     return one.hit_rect.colliderect(two.rect)
