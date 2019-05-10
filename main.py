@@ -42,6 +42,8 @@ class Game:
     def load_data(self):
         game_folder = path.dirname(__file__)
         img_folder = path.join(game_folder,"images")
+        snd_folder = path.join(game_folder, 'sounds/snd')
+        music_folder = path.join(game_folder, 'sounds/music')
         map_folder = path.join(game_folder,"maps")
         self.map = TiledMap(path.join(map_folder, 'map1.tmx'))
         self.map_img = self.map.make_map()
@@ -57,6 +59,31 @@ class Game:
         self.item_images = {}
         for item in ITEM_IMAGES:
             self.item_images[item] = pg.image.load(path.join(img_folder,ITEM_IMAGES[item])).convert_alpha()
+        #sound loading
+        pg.mixer.music.load(path.join(music_folder, BG_MUSIC))
+        self.effects_sounds = {}
+        self.effects_sounds = {}
+        for type in EFFECTS_SOUNDS:
+            self.effects_sounds[type] = pg.mixer.Sound(path.join(snd_folder, EFFECTS_SOUNDS[type]))
+
+        self.weapon_sounds = {}
+        self.weapon_sounds['gun'] = []
+        for snd in WEAPON_SOUNDS_GUN:
+            self.weapon_sounds['gun'].append(pg.mixer.Sound(path.join(snd_folder, snd)))
+
+        self.zombie_moan_sounds = []
+        for snd in ZOMBIE_MOAN_SOUNDS:
+            s = pg.mixer.Sound(path.join(snd_folder, snd))
+            s.set_volume(0.1)
+            self.zombie_moan_sounds.append(s)
+        self.player_hit_sounds = []
+        for snd in PLAYER_HIT_SOUNDS:
+            self.player_hit_sounds.append(pg.mixer.Sound(path.join(snd_folder, snd)))
+        self.zombie_hit_sounds = []
+        for snd in ZOMBIE_HIT_SOUNDS:
+            self.zombie_hit_sounds.append(pg.mixer.Sound(path.join(snd_folder, snd)))
+
+
 
 
 
@@ -94,10 +121,12 @@ class Game:
 
         self.camera = Camera(self.map.width,self.map.height)
         self.draw_debug = False
+        self.effects_sounds['level_start'].play()
 
     def run(self):
         # game loop - set self.playing = False to end the game
         self.playing = True
+        pg.mixer.music.play(loops = -1)
         while self.playing:
             self.dt = self.clock.tick(FPS) / 1000
             self.events()
@@ -118,9 +147,12 @@ class Game:
             if hit.type == "health" and self.player.player_health < PLAYER_HEALTH:
                 hit.kill()
                 self.player.add_health(HEALTH_PACK_AMMOUNT)
+                self.effects_sounds['health_up'].play()
         # mobs hit player
         hits = pg.sprite.spritecollide(self.player,self.mobs,False, collide_hit_rect)
         for hit in hits:
+            if random() < 0.7:
+                choice(self.player_hit_sounds).play()
             self.player.player_health -= MOB_DAMAGE
             hit.vel = vec(0,0)
             if self.player.player_health <= 0:
