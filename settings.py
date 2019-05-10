@@ -31,7 +31,7 @@ PLAYER_SPEED = 350
 PLAYER_ROT_SPEED = 250
 PLAYER_HIT_RECT = pg.Rect(0,0,35,35)
 PLAYER_IMG ="manBlue_gun.png"
-BARREL_OFFSET = vec(20,20)
+BARREL_OFFSET = vec(30,10)
 
 # Gun settings
 BULLET_IMG = "bullet.png"
@@ -50,6 +50,21 @@ MOB_HEALTH = 100
 MOB_DAMAGE = 10
 MOB_KNOCKBACK = 20
 AVOID_RADIUS = 50
+
+# Effects
+MUZZLE_FLASH = ["whitePuff15.png","whitePuff16.png","whitePuff17.png","whitePuff18.png",]
+FLASH_DURATION = 40
+
+WALL_LAYER = 1
+PLAYER_LAYER = 2
+BULLET_LAYER = 3
+MOB_LAYER = 2
+EFFECTS_LAYER = 4
+ITEMS_LAYER = 1
+
+#items
+ITEM_IMAGES={"health":"health_pack.png"}
+HEALTH_PACK_AMMOUNT = 20
 
 def collide_hit_rect(one,two):
     return one.hit_rect.colliderect(two.rect)

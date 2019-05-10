@@ -51,14 +51,23 @@ class Game:
         self.mod_img = pg.image.load(path.join(img_folder, MOB_IMG)).convert_alpha()
         self.wall_img = pg.image.load(path.join(img_folder, WALL_IMG)).convert_alpha()
         self.wall_img = pg.transform.scale(self.wall_img,(TILESIZE,TILESIZE))
+        self.gun_flashes = []
+        for img in MUZZLE_FLASH:
+            self.gun_flashes.append(pg.image.load(path.join(img_folder,img)).convert_alpha())
+        self.item_images = {}
+        for item in ITEM_IMAGES:
+            self.item_images[item] = pg.image.load(path.join(img_folder,ITEM_IMAGES[item])).convert_alpha()
+
+
 
 
     def new(self):
         # initialize all variables and do all the setup for a new game
-        self.all_sprites = pg.sprite.Group()
+        self.all_sprites = pg.sprite.LayeredUpdates()
         self.walls = pg.sprite.Group()
         self.mobs = pg.sprite.Group()
         self.bullets = pg.sprite.Group()
+        self.items = pg.sprite.Group()
 
         # for row, tiles in enumerate(self.map.data):
         #         #     for col, tile in enumerate(tiles):
@@ -69,12 +78,16 @@ class Game:
         #         #         if tile == "p":
         #         #             self.player = Player(self,col,row)
         for tile_object in self.map.tmxdata.objects:
+            obj_center = vec(tile_object.x +tile_object.width/2,tile_object.y +tile_object.height/2)
             if tile_object.name == "player":
-                self.player = Player(self,tile_object.x,tile_object.y)
+                self.player = Player(self,obj_center.x,obj_center.y)
             if tile_object.name == 'zombie':
-                Mob(self, tile_object.x, tile_object.y)
+                Mob(self, obj_center.x, obj_center.y)
             if tile_object.name == "wall":
                 Obstacal(self,tile_object.x,tile_object.y,tile_object.width,tile_object.height)
+            if tile_object.name in ["health"]:
+                Item(self,obj_center,tile_object.name)
+
 
 
 
@@ -99,6 +112,12 @@ class Game:
         # update portion of the game loop
         self.all_sprites.update()
         self.camera.update(self.player)
+        # item colisions
+        hits = pg.sprite.spritecollide(self.player, self.items,False)
+        for hit in hits:
+            if hit.type == "health" and self.player.player_health < PLAYER_HEALTH:
+                hit.kill()
+                self.player.add_health(HEALTH_PACK_AMMOUNT)
         # mobs hit player
         hits = pg.sprite.spritecollide(self.player,self.mobs,False, collide_hit_rect)
         for hit in hits:
