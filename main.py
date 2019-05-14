@@ -70,13 +70,12 @@ class Game:
         img_folder = path.join(game_folder,"images")
         snd_folder = path.join(game_folder, 'sounds/snd')
         music_folder = path.join(game_folder, 'sounds/music')
-        map_folder = path.join(game_folder,"maps")
+        self.map_folder = path.join(game_folder,"maps")
         self.title_font = path.join(font_folder, 'ZOMBIE.TTF')
+        self.hud_font = path.join(font_folder, 'Impacted2.0.TTF')
         self.dim_screen = pg.Surface(self.screen.get_size()).convert_alpha()
         self.dim_screen.fill((0,0,0,180))
-        self.map = TiledMap(path.join(map_folder, 'map1.tmx'))
-        self.map_img = self.map.make_map()
-        self.map_rect = self.map_img.get_rect()
+
         self.player_img = pg.image.load(path.join(img_folder,PLAYER_IMG)).convert_alpha()
         self.bullet_images = {}
         self.bullet_images['lg'] = pg.image.load(path.join(img_folder, BULLET_IMG)).convert_alpha()
@@ -92,6 +91,14 @@ class Game:
         self.item_images = {}
         for item in ITEM_IMAGES:
             self.item_images[item] = pg.image.load(path.join(img_folder,ITEM_IMAGES[item])).convert_alpha()
+
+        #lighting
+        self.fog = pg.Surface((WIDTH,HEIGHT))
+        self.fog.fill(NIGHT_COLOR)
+        self.light_mask = pg.image.load(path.join(img_folder, LIGHT_MASK)).convert_alpha()
+        self.light_mask = pg.transform.scale(self.light_mask,LIGHT_RADIUS)
+        self.light_rect = self.light_mask.get_rect()
+
         #sound loading
         pg.mixer.music.load(path.join(music_folder, BG_MUSIC))
         self.effects_sounds = {}
@@ -131,6 +138,9 @@ class Game:
         self.mobs = pg.sprite.Group()
         self.bullets = pg.sprite.Group()
         self.items = pg.sprite.Group()
+        self.map = TiledMap(path.join(self.map_folder, 'map1.tmx'))
+        self.map_img = self.map.make_map()
+        self.map_rect = self.map_img.get_rect()
 
         # for row, tiles in enumerate(self.map.data):
         #         #     for col, tile in enumerate(tiles):
@@ -158,6 +168,7 @@ class Game:
         self.camera = Camera(self.map.width,self.map.height)
         self.draw_debug = False
         self.paused = False
+        self.night = False
         self.effects_sounds['level_start'].play()
 
     def run(self):
@@ -179,6 +190,11 @@ class Game:
         # update portion of the game loop
         self.all_sprites.update()
         self.camera.update(self.player)
+
+        #Game over
+        if len(self.mobs)==0:
+            self.playing = False
+
         # item colisions
         hits = pg.sprite.spritecollide(self.player, self.items,False)
         for hit in hits:
@@ -207,7 +223,9 @@ class Game:
         # bullets hit mobs
         hits = pg.sprite.groupcollide(self.mobs,self.bullets,False,True)
         for hit in hits:
-            hit.health -= WEAPONS[self.player.weapon]['damage'] * len(hits[hit])
+            #hit.health -= WEAPONS[self.player.weapon]['damage'] * len(hits[hit])
+            for b in hits[hit]:
+                hit.health -= b.damage
             hit.vel = vec(0, 0)
 
     def draw_grid(self):
@@ -215,6 +233,12 @@ class Game:
             pg.draw.line(self.screen, LIGHTGREY, (x, 0), (x, HEIGHT))
         for y in range(0, HEIGHT, TILESIZE):
             pg.draw.line(self.screen, LIGHTGREY, (0, y), (WIDTH, y))
+    def render_fog(self):
+        # draw the light mask (gradient) onto fog image
+        self.fog.fill(NIGHT_COLOR)
+        self.light_rect.center = self.camera.apply(self.player).center
+        self.fog.blit(self.light_mask, self.light_rect)
+        self.screen.blit(self.fog, (0, 0), special_flags=pg.BLEND_MULT)
 
     def draw(self):
         pg.display.set_caption("{:.2f}".format(self.clock.get_fps()))
@@ -232,9 +256,15 @@ class Game:
             for wall in self.walls:
                 pg.draw.rect(self.screen, CYAN, self.camera.apply_rect(wall.rect),1)
 
+        if self.night:
+            self.render_fog()
 
 
+        #hud
         draw_player_health(self.screen,10,10,self.player.player_health/PLAYER_HEALTH)
+        self.draw_text("Zombies: {}".format(len(self.mobs)),self.hud_font,30,WHITE,WIDTH - 10,10,align = "ne")
+
+
         if self.paused:
             self.screen.blit(self.dim_screen,(0,0))
             self .draw_text("Paused",self.title_font,105,RED,WIDTH / 2,HEIGHT/2,align = "nw")
@@ -253,6 +283,9 @@ class Game:
                     self.draw_debug = not self.draw_debug
                 if event.key == pg.K_p:
                     self.paused = not self.paused
+                if event.key == pg.K_n:
+                    self.night = not self.night
+
 
 
 
@@ -261,7 +294,25 @@ class Game:
         pass
 
     def show_go_screen(self):
-        pass
+        self.screen.fill(BLACK)
+        self.draw_text("GAME OVER", self.title_font, 100, RED,
+                       WIDTH / 2, HEIGHT / 2, align="center")
+        self.draw_text("Press a key to start", self.title_font, 75, WHITE,
+                       WIDTH / 2, HEIGHT * 3 / 4, align="center")
+        pg.display.flip()
+        self.wait_for_key()
+
+    def wait_for_key(self):
+        pg.event.wait()
+        waiting = True
+        while waiting:
+            self.clock.tick(FPS)
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    waiting = False
+                    self.quit()
+                if event.type == pg.KEYUP:
+                    waiting = False
 
 # create the game object
 g = Game()
