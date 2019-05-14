@@ -2,6 +2,7 @@ import pygame as pg
 from settings import *
 from random import uniform, choice, randint,random
 import pytweening as tween
+import itertools
 vec = pg.math.Vector2
 
 
@@ -44,6 +45,7 @@ class Player(pg.sprite.Sprite):
         self.last_shot = 0
         self.player_health = PLAYER_HEALTH
         self.weapon = "pistol"
+        self.damaged = False
 
     def add_health(self,ammount):
         self.player_health+=ammount
@@ -65,6 +67,7 @@ class Player(pg.sprite.Sprite):
             self.vel = vec(-PLAYER_SPEED / 2, 0).rotate(-self.rot)
         if keys[pg.K_SPACE]:
             self.shoot()
+
     def shoot(self):
         now = pg.time.get_ticks()
         if now - self.last_shot > WEAPONS[self.weapon]['rate']:
@@ -82,12 +85,21 @@ class Player(pg.sprite.Sprite):
             MuzzleFlash(self.game, pos)
 
 
-
+    def hit(self):
+        self.damaged = True
+        self.damage_alpha = itertools.chain(DAMAGE_ALPHA*4)
 
     def update(self):
         self.get_keys()
         self.rot = (self.rot + self.rot_speed * self.game.dt) % 360
         self.image = pg.transform.rotate(self.game.player_img, self.rot)
+        if self.damaged:
+            try:
+                self.image.fill((255, 255, 255, next(self.damage_alpha)), special_flags=pg.BLEND_RGBA_MULT)
+            except:
+                self.damage = False
+
+
         self.rect = self.image.get_rect()
         self.rect.center = self.pos
         self.pos += self.vel * self.game.dt
@@ -103,13 +115,13 @@ class Bullet(pg.sprite.Sprite):
         self.groups = game.all_sprites,game.bullets
         pg.sprite.Sprite.__init__(self, self.groups)
         self.game = game
-        self.image = game.bullet_images[WEAPONS[game.player.weapon]['bullet_size']]
+        self.image = game.bullet_images[WEAPONS[game.player.weapon]['bullet_size'] ]
         self.rect = self.image.get_rect()
         self.hit_rect = self.rect
         self.pos = vec(pos)
         self.rect.center =pos
         #self.spread = uniform(-GUN_SPREAD,GUN_SPREAD)
-        self.vel = dir * WEAPONS[game.player.weapon]['bullet_speed']
+        self.vel = dir * WEAPONS[game.player.weapon]['bullet_speed']* uniform(0.9,1.1)
         self.spawn_time = pg.time.get_ticks()
 
     def update(self):

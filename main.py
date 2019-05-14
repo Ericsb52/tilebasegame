@@ -148,7 +148,7 @@ class Game:
                 Mob(self, obj_center.x, obj_center.y)
             if tile_object.name == "wall":
                 Obstacal(self,tile_object.x,tile_object.y,tile_object.width,tile_object.height)
-            if tile_object.name in ["health"]:
+            if tile_object.name in ["health","shotgun"]:
                 Item(self,obj_center,tile_object.name)
 
 
@@ -186,6 +186,11 @@ class Game:
                 hit.kill()
                 self.player.add_health(HEALTH_PACK_AMMOUNT)
                 self.effects_sounds['health_up'].play()
+            if hit.type == "shotgun":
+                hit.kill()
+                self.effects_sounds['gun_pickup'].play()
+                self.player.weapon = 'shotgun'
+
         # mobs hit player
         hits = pg.sprite.spritecollide(self.player,self.mobs,False, collide_hit_rect)
         for hit in hits:
@@ -196,6 +201,7 @@ class Game:
             if self.player.player_health <= 0:
                 self.playing = False
         if hits:
+            self.player.hit()
             self.player.pos += vec(MOB_KNOCKBACK,0).rotate(-hits[0].rot)
 
         # bullets hit mobs
