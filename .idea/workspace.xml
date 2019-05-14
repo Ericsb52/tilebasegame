@@ -2,34 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3d77446-e7be-467d-bc0b-ddd8c6199e51" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/sounds/music/274732__tyops__suspense-ambient.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/music/DST-RailJet-LongSeamlessLoop (1).ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/music/DST-RailJet-LongSeamlessLoop (2).ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/music/DST-RailJet-LongSeamlessLoop.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/music/Dark Intro.ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/music/espionage.Ogg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/brains2.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/brains3.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/health_pack.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/level_start.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/pain/10.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/pain/11.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/pain/12.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/pain/13.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/pain/14.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/pain/8.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/pain/9.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/sfx_weapon_singleshot2.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/shotgun.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/splat-15.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/zombie-roar-1.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/zombie-roar-2.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/zombie-roar-3.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/zombie-roar-4.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/zombie-roar-5.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/zombie-roar-6.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/zombie-roar-7.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/snd/zombie-roar-8.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/fonts/ZOMBIE.TTF" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/settings.py" afterDir="false" />
@@ -43,11 +16,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="154" column="53" selection-start-line="154" selection-start-column="53" selection-end-line="154" selection-end-column="53" />
+            <state relative-caret-position="288">
+              <caret line="73" column="49" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
               <folding>
                 <element signature="e#144#163#0" expanded="true" />
               </folding>
@@ -70,8 +43,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="73" column="12" selection-start-line="73" selection-start-column="12" selection-end-line="73" selection-end-column="12" />
+            <state relative-caret-position="196">
+              <caret line="55" column="24" selection-start-line="55" selection-start-column="24" selection-end-line="55" selection-end-column="24" />
             </state>
           </provider>
         </entry>
@@ -85,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sprites.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="334">
-              <caret line="190" column="54" selection-start-line="190" selection-start-column="54" selection-end-line="190" selection-end-column="54" />
+            <state relative-caret-position="149">
+              <caret line="192" column="85" selection-start-line="192" selection-start-column="85" selection-end-line="192" selection-end-column="85" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -116,16 +89,16 @@
         <option value="$PROJECT_DIR$/map.txt" />
         <option value="$PROJECT_DIR$/tilemap.py" />
         <option value="$PROJECT_DIR$/settings.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/sprites.py" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1161" />
-    <option name="y" value="333" />
-    <option name="width" value="861" />
-    <option name="height" value="945" />
+  <component name="ProjectFrameBounds" extendedState="7">
+    <option name="x" value="-1288" />
+    <option name="y" value="-8" />
+    <option name="width" value="1296" />
+    <option name="height" value="1000" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -165,16 +138,17 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\ebroadbent\Desktop\tilebase game\fonts" />
+      <recent name="C:\Users\ebroadbent\Desktop\tilebase game\snd" />
+      <recent name="C:\Users\ebroadbent\Desktop\tilebase game\images" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\ebroadbent\Desktop\tilebase game\sounds" />
       <recent name="C:\Users\ebroadbent\Desktop\tilebase game\snd" />
       <recent name="C:\Users\ebroadbent\Desktop\tilebase game\music" />
       <recent name="C:\Users\ebroadbent\Desktop\tilebase game" />
       <recent name="C:\Users\ebroadbent\Desktop\tilebase game\sounds\snd" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\ebroadbent\Desktop\tilebase game\snd" />
-      <recent name="C:\Users\ebroadbent\Desktop\tilebase game\images" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -243,7 +217,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.15100402" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.28353414" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
@@ -251,7 +225,7 @@
       <window_info anchor="bottom" id="Python Console" order="3" weight="0.3298731" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" weight="0.32947233" />
-      <window_info anchor="bottom" id="Run" order="6" weight="0.32947233" />
+      <window_info active="true" anchor="bottom" id="Run" order="6" visible="true" weight="0.32947233" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
@@ -405,6 +379,7 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/music/._DST-RailJet-LongSeamlessLoop.ogg" />
     <entry file="file://$PROJECT_DIR$/tilemap.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="713">
@@ -422,32 +397,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/music/._DST-RailJet-LongSeamlessLoop.ogg">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="73" column="12" selection-start-line="73" selection-start-column="12" selection-end-line="73" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="154" column="53" selection-start-line="154" selection-start-column="53" selection-end-line="154" selection-end-column="53" />
-          <folding>
-            <element signature="e#144#163#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="196">
+          <caret line="55" column="24" selection-start-line="55" selection-start-column="24" selection-end-line="55" selection-end-column="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sprites.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="190" column="54" selection-start-line="190" selection-start-column="54" selection-end-line="190" selection-end-column="54" />
+        <state relative-caret-position="149">
+          <caret line="192" column="85" selection-start-line="192" selection-start-column="85" selection-end-line="192" selection-end-column="85" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="73" column="49" selection-start-line="73" selection-start-column="49" selection-end-line="73" selection-end-column="49" />
+          <folding>
+            <element signature="e#144#163#0" expanded="true" />
           </folding>
         </state>
       </provider>

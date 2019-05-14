@@ -53,6 +53,7 @@ AVOID_RADIUS = 50
 DETECT_RADIUS = 400
 
 # Effects
+SPLAT = "splatgreen.png"
 MUZZLE_FLASH = ["whitePuff15.png","whitePuff16.png","whitePuff17.png","whitePuff18.png",]
 FLASH_DURATION = 40
 
