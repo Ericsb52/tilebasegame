@@ -43,14 +43,52 @@ class Player(pg.sprite.Sprite):
         self.pos = vec(x, y)
         self.rot = 0
         self.last_shot = 0
+        self.inventory = ["hand"]
         self.player_health = PLAYER_HEALTH
-        self.weapon = "pistol"
+        self.inventory_pos = 0
+        self.weapon = self.inventory[self.inventory_pos]
         self.damaged = False
+        self.ammo = 100
+        self.mag = 0
+        self.reloading = False
+        self.reload_time = WEAPONS[self.weapon]['reload_time']
+
 
     def add_health(self,ammount):
         self.player_health+=ammount
         if self.player_health >PLAYER_HEALTH:
             self.player_health = PLAYER_HEALTH
+    def cycle_inv_plus(self):
+        try:
+            self.inventory_pos +=1
+        except:
+            self.inventory_pos = 0
+        self.mag = WEAPONS[self.weapon]['mag_size']
+    def cycle_inv_neg(self):
+        try:
+            self.inventory_pos -=1
+        except:
+            self.inventory_pos = len(self.inventory)
+        self.mag = WEAPONS[self.weapon]['mag_size']
+
+
+
+    def reload(self):
+
+        if self.ammo > 0 and self.reloading == False:
+
+            for i in range(WEAPONS[self.weapon]['mag_size']):
+                if self.mag == WEAPONS[self.weapon]['mag_size']:
+                    break
+                if self.ammo>0:
+                    self.ammo-=1
+                    self.mag+=1
+                else:
+                    return
+
+
+
+
 
 
     def get_keys(self):
@@ -70,7 +108,7 @@ class Player(pg.sprite.Sprite):
 
     def shoot(self):
         now = pg.time.get_ticks()
-        if now - self.last_shot > WEAPONS[self.weapon]['rate']:
+        if now - self.last_shot > WEAPONS[self.weapon]['rate'] and self.mag>0 and self.reloading == False:
             self.last_shot = now
             dir = vec(1, 0).rotate(-self.rot)
             pos = self.pos + BARREL_OFFSET.rotate(-self.rot)
@@ -82,6 +120,7 @@ class Player(pg.sprite.Sprite):
                 if snd.get_num_channels() > 2:
                     snd.stop()
                 snd.play()
+            self.mag -=1
             MuzzleFlash(self.game, pos)
 
 
@@ -91,6 +130,13 @@ class Player(pg.sprite.Sprite):
 
     def update(self):
         self.get_keys()
+        self.weapon = self.inventory[self.inventory_pos]
+        if self.reload_time >0:
+            self.reload_time-=1
+        else:
+            self.reloading = False
+
+
         self.rot = (self.rot + self.rot_speed * self.game.dt) % 360
         self.image = pg.transform.rotate(self.game.player_img, self.rot)
         if self.damaged:

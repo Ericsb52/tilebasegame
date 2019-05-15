@@ -36,6 +36,16 @@ BARREL_OFFSET = vec(30,10)
 # wepon settings
 BULLET_IMG = "bullet.png"
 WEAPONS = {}
+WEAPONS['hand'] = {'bullet_speed': 0,
+                     'bullet_lifetime': 0,
+                     'rate': 0,
+                     'kickback': 0,
+                     'spread':0,
+                     'damage': 1,
+                     'bullet_size': 'lg',
+                     'bullet_count': 1,
+                     'mag_size':100000,
+                     'reload_time': 0}
 WEAPONS['pistol'] = {'bullet_speed': 500,
                      'bullet_lifetime': 1000,
                      'rate': 250,
@@ -44,7 +54,8 @@ WEAPONS['pistol'] = {'bullet_speed': 500,
                      'damage': 10,
                      'bullet_size': 'lg',
                      'bullet_count': 1,
-                     'mag_size':15}
+                     'mag_size':15,
+                     'reload_time': 150}
 WEAPONS['shotgun'] = {'bullet_speed': 400,
                       'bullet_lifetime': 500,
                       'rate': 900,
@@ -53,7 +64,28 @@ WEAPONS['shotgun'] = {'bullet_speed': 400,
                       'damage': 5,
                       'bullet_size': 'sm',
                       'bullet_count': 12,
-                      "mag_size":6}
+                      "mag_size":6,
+                      'reload_time': 300}
+WEAPONS['m_gun'] = {'bullet_speed': 600,
+                      'bullet_lifetime': 1000,
+                      'rate': 100,
+                      'kickback': 100,
+                      'spread': 2,
+                      'damage': 15,
+                      'bullet_size': 'lg',
+                      'bullet_count': 1,
+                      "mag_size":30,
+                      'reload_time': 200}
+WEAPONS['sniper_rifle'] = {'bullet_speed': 1000,
+                      'bullet_lifetime': 2000,
+                      'rate': 1150,
+                      'kickback': 400,
+                      'spread': 1,
+                      'damage': 100,
+                      'bullet_size': 'lg',
+                      'bullet_count': 1,
+                      "mag_size":5,
+                      'reload_time': 500}
 
 
 # mob settings
@@ -83,7 +115,7 @@ EFFECTS_LAYER = 4
 ITEMS_LAYER = 1
 
 #items
-ITEM_IMAGES={"health":"health_pack.png","shotgun":"obj_shotgun.png"}
+ITEM_IMAGES={"health":"health_pack.png","shotgun":"shotgun_ico.png","pistol":"pistol_ico.png","m_gun":"m_gun_ico.png","sniper_rifle":"sniper_rifle_ico.png"}
 HEALTH_PACK_AMMOUNT = 20
 BOB_RANGE = 15
 BOB_SPEED = .6
@@ -96,7 +128,9 @@ ZOMBIE_MOAN_SOUNDS = ['brains2.wav', 'brains3.wav', 'zombie-roar-1.wav', 'zombie
                       'zombie-roar-3.wav', 'zombie-roar-5.wav', 'zombie-roar-6.wav', 'zombie-roar-7.wav']
 ZOMBIE_HIT_SOUNDS = ['splat-15.wav']
 WEAPON_SOUNDS = {'pistol': ['pistol.wav'],
-                 'shotgun': ['shotgun.wav']}
+                 'shotgun': ['shotgun.wav'],
+                 'm_gun':['pistol.wav'],
+                 'sniper_rifle':['pistol.wav']}
 EFFECTS_SOUNDS = {'level_start': 'level_start.wav',
                   'health_up': 'health_pack.wav',
                   "gun_pickup":"gun_pickup.wav"}

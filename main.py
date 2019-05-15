@@ -158,7 +158,7 @@ class Game:
                 Mob(self, obj_center.x, obj_center.y)
             if tile_object.name == "wall":
                 Obstacal(self,tile_object.x,tile_object.y,tile_object.width,tile_object.height)
-            if tile_object.name in ["health","shotgun"]:
+            if tile_object.name in ["health","shotgun","pistol","m_gun","sniper_rifle"]:
                 Item(self,obj_center,tile_object.name)
 
 
@@ -202,10 +202,34 @@ class Game:
                 hit.kill()
                 self.player.add_health(HEALTH_PACK_AMMOUNT)
                 self.effects_sounds['health_up'].play()
+            if hit.type == "pistol":
+                hit.kill()
+                self.effects_sounds['gun_pickup'].play()
+                self.player.weapon = 'pistol'
+                self.player.mag = WEAPONS[self.player.weapon]['mag_size']
+                if "pistol" not in self.player.inventory:
+                    self.player.inventory.append('pistol')
             if hit.type == "shotgun":
                 hit.kill()
                 self.effects_sounds['gun_pickup'].play()
                 self.player.weapon = 'shotgun'
+                self.player.mag = WEAPONS[self.player.weapon]['mag_size']
+                if "shotgun" not in self.player.inventory:
+                    self.player.inventory.append('shotgun')
+            if hit.type == "m_gun":
+                hit.kill()
+                self.effects_sounds['gun_pickup'].play()
+                self.player.weapon = 'm_gun'
+                self.player.mag = WEAPONS[self.player.weapon]['mag_size']
+                if "m_gun" not in self.player.inventory:
+                    self.player.inventory.append('m_gun')
+            if hit.type == "sniper_rifle":
+                hit.kill()
+                self.effects_sounds['gun_pickup'].play()
+                self.player.weapon = 'sniper_rifle'
+                self.player.mag = WEAPONS[self.player.weapon]['mag_size']
+                if "sniper_rifle" not in self.player.inventory:
+                    self.player.inventory.append('sniper_rifle')
 
         # mobs hit player
         hits = pg.sprite.spritecollide(self.player,self.mobs,False, collide_hit_rect)
@@ -263,8 +287,8 @@ class Game:
         #hud
         draw_player_health(self.screen,10,10,self.player.player_health/PLAYER_HEALTH)
         self.draw_text("Zombies: {}".format(len(self.mobs)),self.hud_font,30,WHITE,WIDTH - 10,10,align = "ne")
-
-
+        self.draw_text("Ammo: {}".format(self.player.ammo), self.hud_font, 30, WHITE, WIDTH - 250, 10, align="ne")
+        self.draw_text("Mag: {}".format(self.player.mag), self.hud_font, 30, WHITE, WIDTH - 250, 50, align="ne")
         if self.paused:
             self.screen.blit(self.dim_screen,(0,0))
             self .draw_text("Paused",self.title_font,105,RED,WIDTH / 2,HEIGHT/2,align = "nw")
@@ -285,6 +309,16 @@ class Game:
                     self.paused = not self.paused
                 if event.key == pg.K_n:
                     self.night = not self.night
+                if event.key == pg.K_r:
+                    self.player.reload()
+                    self.player.reloading = True
+                    self.player.reload_time = WEAPONS[self.player.weapon]['reload_time']
+                if event.key == pg.K_a:
+                    self.player.cycle_inv_neg()
+
+                if event.key == pg.K_q:
+                    self.player.cycle_inv_plus()
+
 
 
 
