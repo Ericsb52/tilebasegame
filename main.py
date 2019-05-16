@@ -287,8 +287,8 @@ class Game:
         #hud
         draw_player_health(self.screen,10,10,self.player.player_health/PLAYER_HEALTH)
         self.draw_text("Zombies: {}".format(len(self.mobs)),self.hud_font,30,WHITE,WIDTH - 10,10,align = "ne")
-        self.draw_text("Ammo: {}".format(self.player.ammo), self.hud_font, 30, WHITE, WIDTH - 250, 10, align="ne")
-        self.draw_text("Mag: {}".format(self.player.mag), self.hud_font, 30, WHITE, WIDTH - 250, 50, align="ne")
+        self.draw_text("Ammo: {}".format(self.player.ammo), self.hud_font, 30, WHITE, WIDTH - 725, 10, align="ne")
+        self.draw_text("Mag: {}".format(self.player.mag), self.hud_font, 30, WHITE, WIDTH - 725, 50, align="ne")
         if self.paused:
             self.screen.blit(self.dim_screen,(0,0))
             self .draw_text("Paused",self.title_font,105,RED,WIDTH / 2,HEIGHT/2,align = "nw")
@@ -313,11 +313,43 @@ class Game:
                     self.player.reload()
                     self.player.reloading = True
                     self.player.reload_time = WEAPONS[self.player.weapon]['reload_time']
-                if event.key == pg.K_a:
-                    self.player.cycle_inv_neg()
 
-                if event.key == pg.K_q:
-                    self.player.cycle_inv_plus()
+                if len(self.player.inventory) > 1:
+                    if event.key == pg.K_1:
+                        self.player.inventory_pos = 0
+                        temp = self.player.mag
+                        self.player.mag=0
+                        self.player.ammo += temp
+                        if self.player.ammo > MAX_AMMO:
+                            self.player.ammo=MAX_AMMO
+                        self.player.mag = WEAPONS[self.player.inventory[self.player.inventory_pos]]['mag_size']
+                    if event.key == pg.K_2:
+                        self.player.inventory_pos = 1
+                        temp = self.player.mag
+                        self.player.mag = 0
+                        self.player.ammo += temp
+                        if self.player.ammo > MAX_AMMO:
+                            self.player.ammo = MAX_AMMO
+                        self.player.mag = WEAPONS[self.player.inventory[self.player.inventory_pos]]['mag_size']
+                    if event.key == pg.K_3:
+                        self.player.inventory_pos = 2
+                        temp = self.player.mag
+                        self.player.mag = 0
+                        self.player.ammo += temp
+                        if self.player.ammo > MAX_AMMO:
+                            self.player.ammo = MAX_AMMO
+                        self.player.mag = WEAPONS[self.player.inventory[self.player.inventory_pos]]['mag_size']
+                    if event.key == pg.K_4:
+                        self.player.inventory_pos = 3
+                        self.player.mag = WEAPONS[self.player.inventory[self.player.inventory_pos]]['mag_size']
+                    if event.key == pg.K_5:
+                        self.player.inventory_pos = 4
+                        temp = self.player.mag
+                        self.player.mag = 0
+                        self.player.ammo += temp
+                        if self.player.ammo > MAX_AMMO:
+                            self.player.ammo = MAX_AMMO
+                        self.player.mag = WEAPONS[self.player.inventory[self.player.inventory_pos]]['mag_size']
 
 
 

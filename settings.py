@@ -32,20 +32,21 @@ PLAYER_ROT_SPEED = 250
 PLAYER_HIT_RECT = pg.Rect(0,0,35,35)
 PLAYER_IMG ="manBlue_gun.png"
 BARREL_OFFSET = vec(30,10)
+MAX_AMMO=200
 
 # wepon settings
 BULLET_IMG = "bullet.png"
 WEAPONS = {}
-WEAPONS['hand'] = {'bullet_speed': 0,
-                     'bullet_lifetime': 0,
-                     'rate': 0,
+WEAPONS['hand'] = {'bullet_speed': 1,
+                     'bullet_lifetime': 1,
+                     'rate': 250,
                      'kickback': 0,
                      'spread':0,
-                     'damage': 1,
-                     'bullet_size': 'lg',
+                     'damage': 10,
+                     'bullet_size': 'sm',
                      'bullet_count': 1,
-                     'mag_size':100000,
-                     'reload_time': 0}
+                     'mag_size':0,
+                     'reload_time': 60}
 WEAPONS['pistol'] = {'bullet_speed': 500,
                      'bullet_lifetime': 1000,
                      'rate': 250,
@@ -130,7 +131,8 @@ ZOMBIE_HIT_SOUNDS = ['splat-15.wav']
 WEAPON_SOUNDS = {'pistol': ['pistol.wav'],
                  'shotgun': ['shotgun.wav'],
                  'm_gun':['pistol.wav'],
-                 'sniper_rifle':['pistol.wav']}
+                 'sniper_rifle':['pistol.wav'],
+                 'hand':['hit_hurt5.wav']}
 EFFECTS_SOUNDS = {'level_start': 'level_start.wav',
                   'health_up': 'health_pack.wav',
                   "gun_pickup":"gun_pickup.wav"}

@@ -45,37 +45,28 @@ class Player(pg.sprite.Sprite):
         self.last_shot = 0
         self.inventory = ["hand"]
         self.player_health = PLAYER_HEALTH
-        self.inventory_pos = 0
+        self.inventory_pos = -1
         self.weapon = self.inventory[self.inventory_pos]
         self.damaged = False
-        self.ammo = 100
+        self.ammo = MAX_AMMO
         self.mag = 0
         self.reloading = False
         self.reload_time = WEAPONS[self.weapon]['reload_time']
+
 
 
     def add_health(self,ammount):
         self.player_health+=ammount
         if self.player_health >PLAYER_HEALTH:
             self.player_health = PLAYER_HEALTH
-    def cycle_inv_plus(self):
-        try:
-            self.inventory_pos +=1
-        except:
-            self.inventory_pos = 0
-        self.mag = WEAPONS[self.weapon]['mag_size']
-    def cycle_inv_neg(self):
-        try:
-            self.inventory_pos -=1
-        except:
-            self.inventory_pos = len(self.inventory)
-        self.mag = WEAPONS[self.weapon]['mag_size']
+
+
 
 
 
     def reload(self):
 
-        if self.ammo > 0 and self.reloading == False:
+        if self.ammo > 0 and self.reloading == False and self.inventory_pos>0:
 
             for i in range(WEAPONS[self.weapon]['mag_size']):
                 if self.mag == WEAPONS[self.weapon]['mag_size']:
@@ -108,7 +99,7 @@ class Player(pg.sprite.Sprite):
 
     def shoot(self):
         now = pg.time.get_ticks()
-        if now - self.last_shot > WEAPONS[self.weapon]['rate'] and self.mag>0 and self.reloading == False:
+        if now - self.last_shot > WEAPONS[self.weapon]['rate'] and self.mag>0 and self.reloading == False and self.inventory_pos >0:
             self.last_shot = now
             dir = vec(1, 0).rotate(-self.rot)
             pos = self.pos + BARREL_OFFSET.rotate(-self.rot)
